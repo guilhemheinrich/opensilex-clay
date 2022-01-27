@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 [![Codecov test coverage](https://codecov.io/gh/guilhemheinrich/R-python-opensilex/branch/master/graph/badge.svg)](https://app.codecov.io/gh/guilhemheinrich/R-python-opensilex?branch=master)
 <!-- badges: end -->
 
-The goal of clay is to ...
+The goal of clay is to provide several easy to use shiny module implementation to intract with an opensilex instance.
 
 ## Installation
 
