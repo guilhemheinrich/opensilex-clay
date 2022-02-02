@@ -21,7 +21,7 @@ You can install the development version of clay from
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("guilhemheinrich/R-python-opensilex")
+devtools::install_github("guilhemheinrich/opensilex-clay")
 ```
 
 ## Example

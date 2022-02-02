@@ -20,7 +20,8 @@ app_ui <- function(request) {
                tabPanel("Scientific Objects", mod_scientific_object_explorer_ui("so")),
                tabPanel("Experiments Data", mod_experiment_explorer_ui("experiments_data")),
                tabPanel("Data", mod_data_explorer_ui("data")),
-               tabPanel("Events", mod_scientific_object_explorer_ui("event"))
+               tabPanel("Events", mod_scientific_object_explorer_ui("event")),
+               tabPanel("TEST",mod_TEST_ui("TEST_ui_1"))
     )
   )
 }

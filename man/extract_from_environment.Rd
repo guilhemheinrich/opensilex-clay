@@ -2,7 +2,7 @@
 % Please edit documentation in R/r6_to_dataframe.R
 \name{extract_from_environment}
 \alias{extract_from_environment}
-\title{Extract the given names field from the environment as a vector.}
+\title{Transform an environment to a vector}
 \usage{
 extract_from_environment(environment, ...)
 }

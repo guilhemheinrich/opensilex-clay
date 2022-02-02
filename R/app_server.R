@@ -7,11 +7,13 @@
 app_server <- function( input, output, session ) {
   # Your application server logic 
   authentification <- mod_authentification_server("auth")
-  experiment <- mod_experiment_explorer_server("experiment", authentification, multiple = FALSE)
-  so <- mod_scientific_object_explorer_server("so", authentification,  multiple = FALSE, options = list(experiment = experiment$selected))
+  experiment <- mod_experiment_explorer_server("experiment", authentification, widget_options = list(multiple = FALSE))
+  so <- mod_scientific_object_explorer_server("so", authentification,  widget_options = list(multiple = FALSE), api_function_options = list(experiment = experiment$selected))
   event <- mod_event_explorer_server("event", authentification)
-  experiments_data <- mod_experiment_explorer_server("experiments_data", authentification, multiple = TRUE)
-  data <- mod_data_explorer_server("data", authentification, options = list(experiment = experiments_data$selected, page = 1))
+  experiments_data <- mod_experiment_explorer_server("experiments_data", authentification, widget_options = list(multiple = TRUE))
+  data <- mod_data_explorer_server("data", authentification, api_function_options = list(experiment = experiments_data$selected, page = 1))
+  test <- mod_TEST_server("TEST_ui_1", experiment)
+  
   # 
   # observe({
   #   selection <- experiment$selected()

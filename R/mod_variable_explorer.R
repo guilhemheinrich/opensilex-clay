@@ -1,67 +1,80 @@
 #' variable_explorer UI Function
 #'
-#' @description A shiny Module.
+#' @description A shiny::selectInput wrapper around VariablesApi.search_variables (\code{\link[opensilexClientToolsR:VariablesApi]{ search_variables }})
 #'
 #' @param id,input,output,session Internal parameters for {shiny}.
 #' @export
-#' @noRd 
-#'
-#' @importFrom shiny NS tagList 
+#' @param id Environment id of the module
+#' @importFrom shiny NS tagList uiOutput
 mod_variable_explorer_ui <- function(id){
   ns <- NS(id)
   tagList(
-    uiOutput(NS(id, "choix"))
+    shiny::uiOutput(NS(id, "choix"))
   )
 }
     
 #' variable_explorer Server Functions
 #'
 #' @export
-#' @noRd 
+#' @param id Internal parameter for {shiny}.
+#' @param authentification_module Authentification module from this package (\code{\link{mod_authentification_server}})
+#' @param api_function_options List of options to pass to VariablesApi.search_variables from opensilexClientToolsR package (\code{\link[opensilexClientToolsR:VariablesApi]{ search_variables }})
+#' @param widget_options List of options to pass to \code{\link[shiny]{selectInput}}
+#' @return A named list with various reactive values
+#' \describe{
+#'  \item{input}{The module input, to be used for binding events}
+#'  \item{options}{The options used to call VariablesApi.search_variables }
+#'  \item{selected}{The selection of the shiny::selectInput widget }
+#'  \item{choices}{A named list containing the selection choices} 
+#'  \item{result_df}{A dataframe containing the results of VariablesApi.search_variables call}
+#' }
+#' @importFrom shiny reactive renderUI
+#' @importFrom stats setNames
 mod_variable_explorer_server <-   function(id,
                                            authentification_module,
-                                           options = list(),
-                                           ...) {
+                                           api_function_options = list(),
+                                           widget_options = list()) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
-    reactive({
+    shiny::reactive({
       authentification_module$connect()
     })
     
-    options_reactive <- compute_reactive_in_list(options)
-    input_parameters <- list(...)
+    # Function to call when wanted actual values, in a reactive context
+    function_options_reactive <- compute_reactive_in_list(api_function_options)
+    widget_options_reactive <- compute_reactive_in_list(widget_options)
+
     itemList <- list()
-    output$choix <- renderUI({
+
+    output$choix <- shiny::renderUI({
       # Compute reactive
       authentification_module$connect()
-      final_options <- options_reactive()
+      final_options <<- function_options_reactive()
       # Custom code
       variablesApi <- VariablesApi$new()
       result <-
         do.call(variablesApi$search_variables, final_options)$data
-      result_df <-
+      result_df <<-
         EnvironmentList_to_dataframe(result)
       itemList <<-
-        setNames(result_df$uri, result_df$name)
+        stats::setNames(result_df$uri, result_df$name)
       
       label <- 'Choose a variable:'
-      if (isTruthy(input_parameters$multiple)) {
+      final_widget_options <- widget_options_reactive()
+      final_widget_options[['inputId']] = ns("choix")
+      final_widget_options[['label']] = label
+      final_widget_options[['choices']] = itemList
+      if (isTruthy(final_widget_options$multiple)) {
         label <- 'Choose one or more variables:'
       }
-      
-      selectInput(
-        inputId = ns("choix"),
-        label = label,
-        choices = itemList,
-        ...
-      )
+      do.call(shiny::selectInput, final_widget_options)
     })
     
-    reactiveitemList <- reactive({
+    reactiveitemList <- shiny::reactive({
       itemList
     })
     
-    selected <- reactive({
+    selected <- shiny::reactive({
       if (length(itemList) > 0 &&
           match(input$choix, itemList) != 0) {
           out <- input$choix
@@ -74,11 +87,14 @@ mod_variable_explorer_server <-   function(id,
     return(
       list(
         input = input,
-        options = reactive({
-          options
+        options = shiny::reactive({
+          final_options
         }),
         selected = selected,
-        choices = reactiveitemList
+        choices = reactiveitemList,
+        result_df = shiny::reactive({
+          result_df
+        })
       )
     )
   })

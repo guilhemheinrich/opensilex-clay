@@ -2,8 +2,8 @@
 
 
 
-
-#' Extract the given names field from the environment as a vector.
+#' Transform an environment to a vector
+#' @description Extract the given names field from the environment as a vector.
 #' @export
 #' @param environment An environment
 #' @param ... A list of name
@@ -13,7 +13,8 @@ extract_from_environment <- function(environment, ...) {
   return(unlist(mget(all_keys, envir = environment)))
 }
 
-#' Extract the given name from all the environment in the list, and return it as a data.frame. If no names are given, extract all the primitive bounded variable
+#' Transform an homgenous environment list to data.frame
+#' @description Extract the given name from all the environment in the list, and return it as a data.frame. If no names are given, extract all the primitive bounded variable
 #' @export
 #' @param environmentList An environment list
 #' @param ... A list of name
@@ -33,7 +34,7 @@ EnvironmentList_to_dataframe <- function(environmentList, ...) {
 #' Return the primitive attributes of an environment
 #' 
 #'
-#'@export
+#' @export
 #' @param environment An environment
 #' @return The name's subset of the environment primitive variable's type 
 get_attributes <- function(environment) {

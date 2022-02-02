@@ -4,8 +4,6 @@ Version: 0.0.0.9000
 Authors@R: person('guilhem', 'heinrich', email = 'guilhem.heinrich@gmail.com', role = c('cre', 'aut'))
 Description: Provide the skeleton and basic functionalities to build a robust opensilex shiny app
 License: MIT + file LICENSE
-Depends:
-    R (>= 4.0.0),
 Imports: 
     attempt,
     config,

@@ -1,10 +1,10 @@
-#' helpers 
+#' Compute reactive value in list 
 #'
-#' @description A utils function
+#' @description Given a list of items, calculate the actual value of the item in the list. It is a helper function to get the value of shiny::reactive value, and then need to be use in a reactive function. If the item is an R litteral, then this function returns it as it is. 
+#' @param options The list to calculate values over
+#' @return The list of the calculated values
 #'
-#' @return The return value, if any, from executing the utility.
-#'
-#' @noRd
+#' @export
 compute_reactive_in_list <- function(options) {
   return(reactive({
     print('computing reactive')
