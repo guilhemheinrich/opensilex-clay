@@ -62,8 +62,15 @@ mod_factor_explorer_server <-   function(id,
       label <- 'Choose a factor:'
       final_widget_options <- widget_options_reactive()
       final_widget_options[['inputId']] = ns("choix")
-      final_widget_options[['label']] = label
-      final_widget_options[['choices']] = itemList
+
+      # If the user specifies thoses values, we keep item
+      # This allow easy use of the module by hiding its UI
+      if (!('label' %in% names(final_widget_options))) {
+        final_widget_options[['label']] = label
+      }
+      if (!('choices' %in% names(final_widget_options))) {
+        final_widget_options[['choices']] = itemList
+      }
       if (isTruthy(final_widget_options$multiple)) {
         label <- 'Choose one or more factors:'
       }

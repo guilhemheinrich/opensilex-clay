@@ -12,7 +12,8 @@ app_server <- function( input, output, session ) {
   event <- mod_event_explorer_server("event", authentification)
   experiments_data <- mod_experiment_explorer_server("experiments_data", authentification, widget_options = list(multiple = TRUE))
   data <- mod_data_explorer_server("data", authentification, api_function_options = list(experiment = experiments_data$selected, page = 1))
-  test <- mod_TEST_server("TEST_ui_1", experiment)
+  so_type <- mod_scientific_object_type_explorer_server("so_type", authentification,  widget_options = list(multiple = FALSE), api_function_options = list(experiment = experiment$selected))
+  test <- mod_TEST_server("TEST_ui_1", so_type)
   
   # 
   # observe({

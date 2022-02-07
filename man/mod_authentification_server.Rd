@@ -14,6 +14,7 @@ A named list with various reactive values
 \describe{
  \item{connect}{A function handling the connection to an Opensilex WebAPI}
  \item{user}{The currently connected user}
+ \item{password}{The current password}
  \item{host}{The current opensilex WebAPI host address}
 }
 }

@@ -26,6 +26,7 @@ mod_authentification_ui <- function(id) {
 #' \describe{
 #'  \item{connect}{A function handling the connection to an Opensilex WebAPI}
 #'  \item{user}{The currently connected user}
+#'  \item{password}{The current password}
 #'  \item{host}{The current opensilex WebAPI host address}
 #' }
 #' @export
@@ -91,6 +92,7 @@ mod_authentification_server <- function(id) {
     return(list(
       connect = connect,
       user = shiny::reactive(input$user),
+      password = shiny::reactive(input$password),
       host = shiny::reactive(input$host)
       ))
   })
