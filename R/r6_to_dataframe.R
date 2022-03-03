@@ -30,7 +30,7 @@ EnvironmentList_to_dataframe <- function(environmentList, ...) {
 }
 
 # @detail The considered primitive types are
-#    "logical" | "character" | "numeric" | "complex" | "integer"
+#    "logical" | "character" | "numeric" | "complex" | "integer" | "double"
 #' Return the primitive attributes of an environment
 #' 
 #'
@@ -40,8 +40,19 @@ EnvironmentList_to_dataframe <- function(environmentList, ...) {
 get_attributes <- function(environment) {
   all_properties <- ls(envir = environment)
   all_types <- sapply(all_properties, (function (prop) typeof(get(prop, envir = environment))))
-  all_attributes <- all_properties[all_types=="logical" | all_types=="character" | all_types=="numeric" | all_types=="complex" | all_types=="integer" ]
+  all_attributes <- all_properties[all_types=="logical" | all_types=="character" | all_types=="numeric" | all_types=="complex" | all_types=="integer" | all_types=="double" ]
   return(all_attributes)
 }
 
-
+splatify <- function(named_list) {
+  final_list <- list()
+  for (index in 1:length(named_list)) {
+    generic_name <- names(named_list)[index]
+    for (item in named_list[[index]]) {
+      to_add <- list(item)
+      names(to_add) <- generic_name
+      final_list <- append(final_list, to_add)
+    }
+  }
+  return(final_list)
+}
