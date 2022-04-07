@@ -7,12 +7,12 @@ library(opensilexClientToolsR)
 #'
 #' @export
 #' @importFrom shiny NS tagList textInput passwordInput actionButton verbatimTextOutput
-mod_authentification_ui <- function(id) {
+mod_authentification_ui <- function(id, default_host = "http://138.102.159.36:8081/rest", default_user = "admin@opensilex.org", default_password = "admin") {
   ns <- NS(id)
   tagList(
-    shiny::textInput(NS(id, "host"), "Host", value = "http://138.102.159.36:8081/rest"),
-    shiny::textInput(NS(id, "user"), "Username", value = "admin@opensilex.org"),
-    shiny::passwordInput(NS(id, "password"), "Password",  value = "admin"),
+    shiny::textInput(NS(id, "host"), "Host", value = default_host),
+    shiny::textInput(NS(id, "user"), "Username", value = default_user),
+    shiny::passwordInput(NS(id, "password"), "Password",  value = default_password),
     shiny::actionButton(NS(id, "test"), "Test connection"),
     shiny::verbatimTextOutput(NS(id, "terminal"))
   )

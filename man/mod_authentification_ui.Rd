@@ -4,7 +4,12 @@
 \alias{mod_authentification_ui}
 \title{authentification UI Function}
 \usage{
-mod_authentification_ui(id)
+mod_authentification_ui(
+  id,
+  default_host = "http://138.102.159.36:8081/rest",
+  default_user = "admin@opensilex.org",
+  default_password = "admin"
+)
 }
 \arguments{
 \item{id, input, output, session}{Internal parameters for {shiny}.}
